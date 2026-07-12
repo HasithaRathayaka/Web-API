@@ -66,19 +66,23 @@ const createPingsRouter = ({ vehicles, pings, deviceKeys }) => {
       return res.status(403).json({ error: "Invalid device key" });
     }
 
-    const { lat, lng, speed } = req.body || {};
+    const { latitude, longitude, speed } = req.body || {};
 
-    if (lat === undefined || lng === undefined || speed === undefined) {
+    if (
+      latitude === undefined ||
+      longitude === undefined ||
+      speed === undefined
+    ) {
       return res.status(400).json({
-        error: "lat, lng, and speed are required",
+        error: "latitude, longitude, and speed are required",
       });
     }
 
     const ping = {
       id: `ping-${String(pings.length + 1).padStart(5, "0")}`,
       vehicle_id: vehicle.id,
-      lat,
-      lng,
+      lat: latitude,
+      lng: longitude,
       speed,
       timestamp: new Date().toISOString(),
     };
